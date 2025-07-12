@@ -12,7 +12,7 @@ export default function Header() {
         <img src={logo} alt="Elpx Logo" className="h-14" />
       </div>
 
-      <nav className="hidden md:flex space-x-6 text-sm text-gray-700 font-medium">
+      <nav className="hidden font-semibold md:flex space-x-8 text-sm text-gray-700">
         <a href="#">Campaigns</a>
         <a href="#">About</a>
         <a href="#">Pricing</a>
