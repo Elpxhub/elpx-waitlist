@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 export default function Footer() {
   return (
     <footer className="w-full my-4 md:my-8 border-gray-200 bg-white text-sm font-sans">
-      <div className="w-full px-6 py-10 flex flex-col md:flex-row justify-between gap-12">
+      <div className="w-full px-6 py-10 pt-0 sm:pt-10 flex flex-col md:flex-row justify-between gap-12">
         {/* Left Section */}
         <div className="max-w-sm space-y-4">
           <img src={logo} alt="Elpx Logo" className="h-14" />
