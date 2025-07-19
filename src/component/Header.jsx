@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 
 export default function Header() {
   const comingSoon = () => {
-    toast.success("Coming Soon! Stay tuned for updates.");
+    toast.success("The buzz is real! 🚀 Stay tuned for our official launch! 🎉");
   };
   return (
     <div className="flex items-center justify-between py-4 px-6">
@@ -12,12 +12,12 @@ export default function Header() {
         <img src={logo} alt="Elpx Logo" className="h-14" />
       </div>
 
-      <nav className="hidden font-semibold md:flex space-x-8 text-sm text-gray-700">
+      {/* <nav className="hidden font-semibold md:flex space-x-8 text-sm text-gray-700">
         <a href="#">Campaigns</a>
         <a href="#">About</a>
         <a href="#">Pricing</a>
         <a href="#">Testimonials</a>
-      </nav>
+      </nav> */}
 
       <div className="hidden sm:flex items-center space-x-2">
         <Button variant="outline" onClick={comingSoon}>Login</Button>

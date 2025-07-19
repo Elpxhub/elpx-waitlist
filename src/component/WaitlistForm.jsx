@@ -3,12 +3,14 @@ import { supabase } from "../supabaseClient";
 import { toast, Toaster } from "react-hot-toast";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import logo from "../assets/logo.png";
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [hasJoined, setHasJoined] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +18,6 @@ export default function WaitlistForm() {
 
     setIsLoading(true);
 
-    // Check if the email already exists
     const { data: existingEmail, error: checkError } = await supabase
       .from("waitlist")
       .select("id")
@@ -30,32 +31,40 @@ export default function WaitlistForm() {
     }
 
     if (existingEmail) {
-      toast.success("You're already on the list. We’ll keep you posted!");
+      // toast.success("You're already on the list. We’ll keep you posted!");
       setHasJoined(true);
       setEmail("");
+      triggerModal("You're already on the list! 👍.  We’ll keep you posted!");
       setIsLoading(false);
       return;
     }
 
-    // Insert the new email
     const { error: insertError } = await supabase
       .from("waitlist")
       .insert([{ email }]);
 
     if (insertError) {
       if (insertError.code === "23505") {
-        toast.success("You're already on the list. We’ll keep you posted!");
+        triggerModal("You're already on the list! 👍. We’ll keep you posted!");
+        // toast.success("You're already on the list. We’ll keep you posted!");
         setHasJoined(true);
       } else {
         toast.error("Failed to join the waitlist. Please try again.");
       }
     } else {
-      toast.success("You're in! We'll let you know when we launch.");
+      // toast.success("You're in! We'll let you know when we launch.");
       setHasJoined(true);
       setEmail("");
+      triggerModal("You're in!👍. We'll let you know when we launch.");
     }
 
     setIsLoading(false);
+  };
+
+  const triggerModal = (message) => {
+    setModalMessage(message);
+    setShowModal(true);
+    setTimeout(() => setShowModal(false), 3000);
   };
 
   return (
@@ -73,6 +82,7 @@ export default function WaitlistForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <motion.button
           type="submit"
           whileHover={{
@@ -88,8 +98,8 @@ export default function WaitlistForm() {
             hasJoined
               ? "bg-green-700 cursor-default opacity-100"
               : isLoading
-                ? "bg-green-500 cursor-wait opacity-80"
-                : "bg-green-600 hover:bg-green-700"
+              ? "bg-green-500 cursor-wait opacity-80"
+              : "bg-green-600 hover:bg-green-700"
           }`}
         >
           {isLoading ? (
@@ -123,11 +133,22 @@ export default function WaitlistForm() {
         </motion.button>
 
         <Toaster position="top-center" />
-        {/* {submitted && (
-          <p className="text-green-600 text-sm">You're on the waitlist!</p>
-        )} */}
-        {/* {error && <p className="text-red-600 text-sm">{error}</p>} */}
       </form>
+
+      {/* ✅ Modal with dynamic message */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="bg-white px-4 py-14 mx-3 rounded-xl shadow-xl text-center"
+          > 
+            <img src={logo} alt="Elpx Logo" className="h-12 mx-auto mb-5" />
+            <p className="text-xl text-green-700">{modalMessage}</p>
+          </motion.div>
+        </div>
+      )}
     </>
   );
 }
