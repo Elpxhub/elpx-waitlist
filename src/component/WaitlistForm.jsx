@@ -93,7 +93,7 @@ export default function WaitlistForm() {
                 : "none",
           }}
           whileTap={!isLoading && !hasJoined ? { scale: 0.97 } : {}}
-          disabled={isLoading || hasJoined}
+          disabled={isLoading}
           className={`w-full mt-6 py-3 rounded-md shadow-md text-white transition-all duration-200 ${
             hasJoined
               ? "bg-green-700 cursor-default opacity-100"
@@ -111,23 +111,7 @@ export default function WaitlistForm() {
               />
               Please wait...
             </span>
-          ) : hasJoined ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414L8.414 15l-4.121-4.121a1 1 0 111.414-1.414L8.414 12.586l7.879-7.879a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              You've joined
-            </span>
-          ) : (
+          ) :  (
             "Join Waitlist"
           )}
         </motion.button>
